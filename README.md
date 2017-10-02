@@ -1,0 +1,1 @@
+deleted result from regulation
