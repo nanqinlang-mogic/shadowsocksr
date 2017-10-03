@@ -18,5 +18,5 @@
 # under the License.
 
 def version():
-	return 'full branch 2017-09-16 Modified by SuzukazeAoran'
+	return 'full branch 2017-10-03 Modified by nanqinlang'
 
