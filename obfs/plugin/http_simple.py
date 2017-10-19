@@ -2,7 +2,7 @@
 #
 # Copyright 2015-2015 breakwa11
 #
-# Modified  2017 nanqinlang
+# Modified  2017 SuzukazeAoran
 #
 # Licensed under the Apache License, Version 2.0 (the "License"); you may
 # not use this file except in compliance with the License. You may obtain
@@ -66,18 +66,19 @@ class http_simple(plain.plain):
 		self.host = None
 		self.port = 0
 		self.recv_buffer = b''
-		self.user_agent = [b"Mozilla/5.0 (Windows NT 6.3; WOW64; rv:40.0) Gecko/20100101 Firefox/40.0",
-			b"Mozilla/5.0 (Windows NT 6.3; WOW64; rv:40.0) Gecko/20100101 Firefox/44.0",
-			b"Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2228.0 Safari/537.36",
-			b"Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/535.11 (KHTML, like Gecko) Ubuntu/11.10 Chromium/27.0.1453.93 Chrome/27.0.1453.93 Safari/537.36",
-			b"Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:35.0) Gecko/20100101 Firefox/35.0",
-			b"Mozilla/5.0 (compatible; WOW64; MSIE 10.0; Windows NT 6.2)",
-			b"Mozilla/5.0 (Windows; U; Windows NT 6.1; en-US) AppleWebKit/533.20.25 (KHTML, like Gecko) Version/5.0.4 Safari/533.20.27",
-			b"Mozilla/4.0 (compatible; MSIE 7.0; Windows NT 6.3; Trident/7.0; .NET4.0E; .NET4.0C)",
-			b"Mozilla/5.0 (Windows NT 6.3; Trident/7.0; rv:11.0) like Gecko",
-			b"Mozilla/5.0 (Linux; Android 4.4; Nexus 5 Build/BuildID) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/30.0.0.0 Mobile Safari/537.36",
-			b"Mozilla/5.0 (iPad; CPU OS 5_0 like Mac OS X) AppleWebKit/534.46 (KHTML, like Gecko) Version/5.1 Mobile/9A334 Safari/7534.48.3",
-			b"Mozilla/5.0 (iPhone; CPU iPhone OS 5_0 like Mac OS X) AppleWebKit/534.46 (KHTML, like Gecko) Version/5.1 Mobile/9A334 Safari/7534.48.3"]
+		self.user_agent = [b"BaiduTieba for Android 7.1.4"]
+			#[b"Mozilla/5.0 (Windows NT 6.3; WOW64; rv:40.0) Gecko/20100101 Firefox/40.0",
+			#b"Mozilla/5.0 (Windows NT 6.3; WOW64; rv:40.0) Gecko/20100101 Firefox/44.0",
+			#b"Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2228.0 Safari/537.36",
+			#b"Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/535.11 (KHTML, like Gecko) Ubuntu/11.10 Chromium/27.0.1453.93 Chrome/27.0.1453.93 Safari/537.36",
+			#b"Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:35.0) Gecko/20100101 Firefox/35.0",
+			#b"Mozilla/5.0 (compatible; WOW64; MSIE 10.0; Windows NT 6.2)",
+			#b"Mozilla/5.0 (Windows; U; Windows NT 6.1; en-US) AppleWebKit/533.20.25 (KHTML, like Gecko) Version/5.0.4 Safari/533.20.27",
+			#b"Mozilla/4.0 (compatible; MSIE 7.0; Windows NT 6.3; Trident/7.0; .NET4.0E; .NET4.0C)",
+			#b"Mozilla/5.0 (Windows NT 6.3; Trident/7.0; rv:11.0) like Gecko",
+			#b"Mozilla/5.0 (Linux; Android 4.4; Nexus 5 Build/BuildID) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/30.0.0.0 Mobile Safari/537.36",
+			#b"Mozilla/5.0 (iPad; CPU OS 5_0 like Mac OS X) AppleWebKit/534.46 (KHTML, like Gecko) Version/5.1 Mobile/9A334 Safari/7534.48.3",
+			#b"Mozilla/5.0 (iPhone; CPU iPhone OS 5_0 like Mac OS X) AppleWebKit/534.46 (KHTML, like Gecko) Version/5.1 Mobile/9A334 Safari/7534.48.3"]
 
 	def encode_head(self, buf):
 		hexstr = binascii.hexlify(buf)
@@ -114,7 +115,8 @@ class http_simple(plain.plain):
 			http_head += body + "\r\n\r\n"
 		else:
 			http_head += b"User-Agent: " + random.choice(self.user_agent) + b"\r\n"
-			http_head += b"Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8\r\nAccept-Language: en-US,en;q=0.8\r\nAccept-Encoding: gzip, deflate\r\nDNT: 1\r\nConnection: keep-alive\r\n\r\n"
+			#http_head += b"Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8\r\nAccept-Language: en-US,en;q=0.8\r\nAccept-Encoding: gzip,deflate\r\nDNT: 1\r\nConnection: keep-alive\r\n\r\n"
+			http_head += b"Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8\r\nAccept-Language: zh-CN,en-US;q=0.8\r\nAccept-Encoding: gzip\r\nDNT: 1\r\nConnection: keep-alive\r\n\r\n"
 		self.has_sent_header = True
 		return http_head + buf
 
@@ -132,9 +134,11 @@ class http_simple(plain.plain):
 		if self.has_sent_header:
 			return buf
 
-		header = b'HTTP/1.1 200 OK\r\nConnection: keep-alive\r\nContent-Encoding: gzip\r\nContent-Type: text/html\r\nDate: '
+		#header = b'HTTP/1.1 200 OK\r\nConnection: keep-alive\r\nContent-Encoding: gzip\r\nContent-Type: text/html\r\nDate: '
+		header = b'HTTP/1.1 200 OK\r\nConnection: keep-alive\r\nContent-Encoding: gzip\r\nContent-Type: application/x-www-form-urlencoded\r\nDate: '
 		header += to_bytes(datetime.datetime.now().strftime('%a, %d %b %Y %H:%M:%S GMT'))
-		header += b'\r\nServer: nginx\r\nVary: Accept-Encoding\r\n\r\n'
+		#header += b'\r\nServer: nginx\r\nVary: Accept-Encoding\r\n\r\n'
+		header += b'\r\nServer: BaiduTieba\r\nAccept-Encoding: gzip\r\n\r\n'
 		self.has_sent_header = True
 		return header + buf
 
@@ -222,7 +226,8 @@ class http_post(http_simple):
 		super(http_post, self).__init__(method)
 
 	def boundary(self):
-		return to_bytes(''.join([random.choice("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789") for i in range(32)]))
+		#return to_bytes(''.join([random.choice("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789") for i in range(32)]))
+		return to_bytes(''.join([random.choice("cq7jZDxLoRU5J1Ix7ytbDi7GMk86fQ2ZYS0VG6wl7DoisMMOGrcAEo7ARSnAFZ") for i in range(32)]))
 
 	def client_encode(self, buf):
 		if self.has_sent_header:
@@ -251,7 +256,8 @@ class http_post(http_simple):
 			http_head += body + "\r\n\r\n"
 		else:
 			http_head += b"User-Agent: " + random.choice(self.user_agent) + b"\r\n"
-			http_head += b"Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8\r\nAccept-Language: en-US,en;q=0.8\r\nAccept-Encoding: gzip, deflate\r\n"
+			#http_head += b"Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8\r\nAccept-Language: en-US,en;q=0.8\r\nAccept-Encoding: gzip, deflate\r\n"
+			http_head += b"Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8\r\nAccept-Language: zh-CN,en-US;q=0.8\r\nAccept-Encoding: gzip\r\n"
 			http_head += b"Content-Type: multipart/form-data; boundary=" + self.boundary() + b"\r\nDNT: 1\r\n"
 			http_head += b"Connection: keep-alive\r\n\r\n"
 		self.has_sent_header = True
